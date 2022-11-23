@@ -1,5 +1,5 @@
 defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
-	alias ProjetoSiteMusicaBackend.Albums
+	alias ProjetoSiteMusicaBackend.{Albums, Songs}
 	use ProjetoSiteMusicaBackendWeb, :controller
 
 	def list(conn, params) do
@@ -10,8 +10,9 @@ defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
 
 	def show(conn, %{"id" => param_id}) do
 		with {id, _} <- Integer.parse(param_id),
-			 {:ok, album} <- Albums.get_by_id(id) do
-			render(conn, "album.json", album: album)
+			 {:ok, album} <- Albums.get_by_id(id),
+			 {:ok, songs} <- Songs.list_by_album(id) do
+			render(conn, "album.json", album: album, songs: songs)
 		else
 			:error -> Plug.Conn.send_resp(conn, 403, "'id' parameter is not an Integer")
 			{:ok, :not_found} -> Plug.Conn.send_resp(conn, 404, "Album not found")
@@ -26,7 +27,7 @@ defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
 		"duration" => _duration,
 		"image_path" => _image_path
 	}) do
-		with {:error, :not_found} <- Albums.get_by_name_and_band(name, band),
+		with {:ok, []} <- Albums.get_by_name_and_band(name, band),
 			 {:ok, album} <- Albums.create_album(params) do
 			render(conn, "album.json", album: album)
 		else

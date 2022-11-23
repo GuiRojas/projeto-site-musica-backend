@@ -49,9 +49,8 @@ defmodule ProjetoSiteMusicaBackend.Albums do
 			|> Repo.all()
 
 		case albums do
-			[] -> {:error, :not_found}
 			nil -> {:error, :not_found}
-			_ -> albums
+			_ -> {:ok, albums}
 		end
 	end
 
