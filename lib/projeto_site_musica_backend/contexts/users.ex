@@ -19,6 +19,5 @@ defmodule ProjetoSiteMusicaBackend.Users do
 		params
 		|> User.changeset()
 		|> Repo.insert()
-		|> IO.inspect()
 	end
 end
