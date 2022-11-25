@@ -31,8 +31,7 @@ defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
 			 {:ok, album} <- Albums.create_album(params) do
 			render(conn, "album.json", album: album)
 		else
-			{:ok, _user} -> Plug.Conn.send_resp(conn, 403, "Band already exists")
-
+			{:ok, _user} -> Plug.Conn.send_resp(conn, 403, "This band already has an Album with the same name")
 		end
 	end
 

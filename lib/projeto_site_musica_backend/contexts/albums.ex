@@ -26,7 +26,7 @@ defmodule ProjetoSiteMusicaBackend.Albums do
 
 	def list(params) do
 		query =
-			from(a in Album)
+			from(a in Album, order_by: a.id)
 			|> search_query(params)
 			|> paginate_query(params)
 
