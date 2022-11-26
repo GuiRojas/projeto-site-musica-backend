@@ -47,3 +47,12 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
+
+config :projeto_site_musica_backend, ProjetoSiteMusicaBackend.Repo,
+  username: "1a4f6af0-1a48-47cb-880c-261c2af688f4-user",
+  password: "pw-022060ed-a452-485b-8f7f-f5b5835aab91",
+  hostname: "postgres-free-tier-v2020.gigalixir.com",
+  database: "1a4f6af0-1a48-47cb-880c-261c2af688f4",
+  maintenance_database: "1a4f6af0-1a48-47cb-880c-261c2af688f4",
+  show_sensitive_data_on_connection_error: false,
+  pool_size: 2
