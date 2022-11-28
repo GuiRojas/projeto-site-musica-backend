@@ -39,4 +39,16 @@ defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
 		Plug.Conn.send_resp(conn, 403, "Incorrect parameters. Assure you are sending " <>
 			"'name', 'band', 'duration' and 'image_path'")
 	end
+
+	def delete(conn, %{"id" => param_id}) do
+		with {:ok, album} <- Albums.get_by_id(param_id),
+			 {:ok, _} <- Albums.delete(album) do
+			render(conn, "album.json", album: album)
+		else
+			{:error, :not_found} -> Plug.Conn.send_resp(conn, 404, "Album not found")
+		end
+	end
+
+	def delete(conn,_), do: Plug.Conn.send_resp(conn, 403, "Missing 'id' parameter")
+
 end

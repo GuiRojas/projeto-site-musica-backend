@@ -2,6 +2,13 @@ defmodule ProjetoSiteMusicaBackend.Songs do
 	alias ProjetoSiteMusicaBackend.{Repo, Song}
 	import Ecto.Query
 	
+	def get_by_id(id) do
+		case Repo.get(Song, id) do
+			nil -> {:error, :not_found}
+			alb -> {:ok, alb}
+		end
+	end
+
 	def list_by_album(id) do
 		songs =
 			from(s in Song,
@@ -23,6 +30,11 @@ defmodule ProjetoSiteMusicaBackend.Songs do
 		params
 		|> Song.changeset
 		|> Repo.insert
+	end
+
+	def delete(song = %Song{}) do
+		song
+		|> Repo.delete
 	end
 
 end

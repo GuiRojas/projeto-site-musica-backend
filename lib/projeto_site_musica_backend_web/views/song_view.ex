@@ -9,6 +9,7 @@ defmodule ProjetoSiteMusicaBackendWeb.SongView do
 
 	def render("song.json", %{song: song}) do
 		%{
+			id: song.id,
 			name: song.name,
 			duration: song.duration,
 			album_id: song.album_id,

@@ -17,11 +17,13 @@ defmodule ProjetoSiteMusicaBackendWeb.Router do
       get "", AlbumController, :list
       get "/:id", AlbumController, :show
       post "/new", AlbumController, :create
+      delete "/:id", AlbumController, :delete
       get "/:id/songs", SongController, :songs
     end
 
     scope "/songs" do
       post "/new", SongController, :create
+      delete "/:id", SongController, :delete
     end
   end
 end

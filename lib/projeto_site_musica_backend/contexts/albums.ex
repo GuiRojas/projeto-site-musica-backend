@@ -64,4 +64,9 @@ defmodule ProjetoSiteMusicaBackend.Albums do
 		|> Album.changeset()
 		|> Repo.insert()
 	end
+
+	def delete(album = %Album{}) do
+		album
+		|> Repo.delete()
+	end
 end

@@ -29,4 +29,16 @@ defmodule ProjetoSiteMusicaBackendWeb.SongController do
 	def create(conn, _params), do: 
 		Plug.Conn.send_resp(conn, 403, "Incorrect parameters. Assure you are sending " <>
 			"'album_id', 'name' and 'duration'")
+
+	def delete(conn, %{"id" => param_id}) do
+		with {:ok, song} <- Songs.get_by_id(param_id),
+			 {:ok, _} <- Songs.delete(song) do
+			render(conn, "song.json", song: song)
+		else
+			{:error, :not_found} -> Plug.Conn.send_resp(conn, 404, "Song not found")
+		end
+	end
+
+	def delete(conn,_), do: Plug.Conn.send_resp(conn, 403, "Missing 'id' parameter")
+
 end
