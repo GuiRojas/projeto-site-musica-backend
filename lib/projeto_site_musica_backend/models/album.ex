@@ -8,7 +8,7 @@ defmodule ProjetoSiteMusicaBackend.Album do
     	field :image_path, :string
 	end
 
-	def changeset(params) do
+	def changeset(album = %__MODULE__{}, params) do
 		fields = [
 			:name,
 			:band,
@@ -16,7 +16,7 @@ defmodule ProjetoSiteMusicaBackend.Album do
 			:image_path
 		]
 
-		%__MODULE__{}
+		album
 		|> Ecto.Changeset.cast(params, fields)
 	end
 end

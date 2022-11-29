@@ -60,9 +60,21 @@ defmodule ProjetoSiteMusicaBackend.Albums do
 		"duration" => _duration,
 		"image_path" => _image_path
 	}) do		
-		params
-		|> Album.changeset()
+		%Album{}
+		|> Album.changeset(params)
 		|> Repo.insert()
+	end
+
+	def edit_album(album = %Album{}, params) do
+		new_album =
+			album
+			|> Album.changeset(params)
+			|> Repo.update()
+
+		case new_album do
+			{:ok, edited_album} -> {:ok, edited_album}
+			{:error, changeset} -> {:error, changeset}
+		end
 	end
 
 	def delete(album = %Album{}) do

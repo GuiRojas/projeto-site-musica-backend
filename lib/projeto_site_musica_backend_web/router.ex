@@ -14,15 +14,16 @@ defmodule ProjetoSiteMusicaBackendWeb.Router do
     end
 
     scope "/albums" do
-      get "", AlbumController, :list
+      get "/", AlbumController, :list
       get "/:id", AlbumController, :show
-      post "/new", AlbumController, :create
+      post "/", AlbumController, :create
+      put "/:id", AlbumController, :edit
       delete "/:id", AlbumController, :delete
       get "/:id/songs", SongController, :songs
     end
 
     scope "/songs" do
-      post "/new", SongController, :create
+      post "/", SongController, :create
       delete "/:id", SongController, :delete
     end
   end

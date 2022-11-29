@@ -40,8 +40,19 @@ defmodule ProjetoSiteMusicaBackendWeb.AlbumController do
 			"'name', 'band', 'duration' and 'image_path'")
 	end
 
+	def edit(conn, params = %{"id" => param_id}) do
+		with {:ok, album} <- Albums.get_by_id(param_id),
+			 {:ok, new_album} <- Albums.edit_album(album, params) do
+			render(conn, "album.json", album: new_album)
+		else
+			{:error, _} -> Plug.Conn.send_resp(conn, 500, "Internal Server Error. Assure you are requesting correctly.")
+		end
+	end
+
 	def delete(conn, %{"id" => param_id}) do
 		with {:ok, album} <- Albums.get_by_id(param_id),
+			 {:ok, songs} <- Songs.list_by_album(album.id),
+			 Enum.map(songs, fn s -> Songs.delete(s) end),
 			 {:ok, _} <- Albums.delete(album) do
 			render(conn, "album.json", album: album)
 		else
